@@ -9,10 +9,16 @@
                                                     :commonlisp
                                                     :dockerfile
                                                     :fennel
+                                                    :python
                                                     :html
                                                     :java
+                                                    :angular
+                                                    :typescript
                                                     :javascript
                                                     :json
+                                                    :diff
+                                                    :sql
+                                                    :yaml
                                                     :lua
                                                     :markdown
                                                     :yaml]})))}]
