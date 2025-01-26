@@ -1,0 +1,18 @@
+-- [nfnl] Compiled from fnl/config/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
+vim.keymap.set("n", "<space>", "<nop>", {noremap = true})
+vim.keymap.set("n", "<CR>", ":noh<CR><CR>", {noremap = true})
+vim.keymap.set("n", "<C-w>T", ":tab split<CR>", {noremap = true, silent = true})
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", {noremap = true})
+vim.keymap.set("n", "<C-h>", "<C-w>h", {desc = "switch window left"})
+vim.keymap.set("n", "<C-l>", "<C-w>l", {desc = "switch window right"})
+vim.keymap.set("n", "<C-j>", "<C-w>j", {desc = "switch window down"})
+vim.keymap.set("n", "<C-k>", "<C-w>k", {desc = "switch window up"})
+vim.keymap.set("i", "jj", "<Esc>", {noremap = true})
+vim.keymap.set("n", "<leader>w", "<C-w>v<C-w>l", {desc = "split horizontal"})
+vim.keymap.set("n", "<leader>v", "<C-w>s<C-w>l", {desc = "split vertical"})
+vim.keymap.set("n", "<C-s>", "<cmd>w<CR>", {desc = "general save file"})
+vim.keymap.set("n", "<leader>b", "<cmd>enew<CR>", {desc = "buffer new"})
+vim.keymap.set("n", "<tab>", "<cmd>bnext<CR>", {desc = "buffer goto next"})
+vim.keymap.set("n", "<S-tab>", "<cmd>bprev<CR>", {desc = "buffer goto prev"})
+vim.keymap.set("n", "<leader>x", "<cmd>bd<CR>", {desc = "close buffer"})
+return {}
