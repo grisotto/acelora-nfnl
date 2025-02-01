@@ -45,4 +45,36 @@
 
 ;; close buffer
 (vim.keymap.set :n :<leader>x "<cmd>bd<CR>" {:desc "close buffer"})
+
+(fn get-current-form []
+  "Get the form under cursor using Conjure's extract API"
+  (let [extract (require :conjure.extract)]
+    (extract.form {})))
+
+(fn macro-expand []
+  (let [form-data (get-current-form)
+        form-content (. form-data :content)
+        cmd (.. "(clojure.walk/macroexpand-all '" form-content ")")
+        eval-module (require :conjure.eval)]
+    (eval-module.eval-str 
+     {:code cmd
+      :origin :macroexpand-shortcut})))
+
+(vim.keymap.set :n "<localleader>me" macro-expand {:desc "Macro expand form"})
+
+(fn debug-macro-expand []
+  (let [form-data (get-current-form)
+        form-content (. form-data :content)
+        eval-module (require :conjure.eval)]
+    ;; First evaluate what we got from the cursor
+    (eval-module.eval-str 
+     {:code (.. "\"Form under cursor: " form-content "\"")
+      :origin :debug-cursor-content})
+    ;; Then do the macro expansion
+    (eval-module.eval-str 
+     {:code (.. "(clojure.walk/macroexpand-all '" form-content ")")
+      :origin :debug-macro-expand})))
+
+(vim.keymap.set :n "<localleader>mde" debug-macro-expand {:desc "Debug + Macro expand form"})
+
 {}
