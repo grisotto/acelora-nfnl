@@ -178,11 +178,9 @@ Some gifs showing how it works.
 ### Completion
 ![auto-complete](docs/auto-complete.gif)
 
-## Etymology
-Cajus is the Portuguese for cashews, which is a fitting name because the format of its nuts reminded me of a parenthesis.
+## CopilotChat
+Need to install https://github.com/gptlang/lua-tiktoken
 
-## Contributing
-If you find any dead links, misinformation or any improvements in this documents at all [Emails](https://github.com/rafaeldelboni), [PRs](https://github.com/rafaeldelboni/cajus-nvim/pulls) and [Issues](https://github.com/rafaeldelboni/cajus-nvim/issues) are highly encouraged.
 
 ## License
 This is free and unencumbered software released into the public domain.
