@@ -77,4 +77,27 @@
 
 (vim.keymap.set :n "<localleader>mde" debug-macro-expand {:desc "Debug + Macro expand form"})
 
+
+(local api vim.api)
+(local fnn vim.fn)
+(local cmd vim.cmd)
+
+(fn auto-conjure-select []
+  ;; `vim.schedule_wrap` is the correct function to wrap async execution
+  ((vim.schedule_wrap (fn []
+    (let [shadow-build (fnn.system
+                            "ps aux | grep 'shadow-cljs watch' | head -1 | sed -E 's/.*?shadow-cljs watch //' | tr -d '\n'")]
+      (when (> (string.len shadow-build) 0)  ;; Ensure it's not empty
+        (cmd (.. "ConjureShadowSelect " shadow-build))))))))
+
+;; Define the :AutoConjureSelect command
+(api.nvim_create_user_command "AutoConjureSelect"
+  auto-conjure-select
+  {})
+
+;; Auto-run for .cljs files
+(api.nvim_create_autocmd "BufReadPost"
+  {:pattern "*.cljs"
+   :callback auto-conjure-select})
+
 {}

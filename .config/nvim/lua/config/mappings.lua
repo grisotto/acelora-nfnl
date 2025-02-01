@@ -35,4 +35,20 @@ local function debug_macro_expand()
   return eval_module["eval-str"]({code = ("(clojure.walk/macroexpand-all '" .. form_content .. ")"), origin = "debug-macro-expand"})
 end
 vim.keymap.set("n", "<localleader>mde", debug_macro_expand, {desc = "Debug + Macro expand form"})
+local api = vim.api
+local fnn = vim.fn
+local cmd = vim.cmd
+local function auto_conjure_select()
+  local function _1_()
+    local shadow_build = fnn.system("ps aux | grep 'shadow-cljs watch' | head -1 | sed -E 's/.*?shadow-cljs watch //' | tr -d '\n'")
+    if (string.len(shadow_build) > 0) then
+      return cmd(("ConjureShadowSelect " .. shadow_build))
+    else
+      return nil
+    end
+  end
+  return vim.schedule_wrap(_1_)()
+end
+api.nvim_create_user_command("AutoConjureSelect", auto_conjure_select, {})
+api.nvim_create_autocmd("BufReadPost", {pattern = "*.cljs", callback = auto_conjure_select})
 return {}
