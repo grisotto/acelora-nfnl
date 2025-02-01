@@ -48,6 +48,23 @@ local function _1_()
     local root = util.root_pattern(patterns)(pattern)
     return (root or fallback)
   end
-  return lsp.clojure_lsp.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, root_dir = _4_})
+  lsp.clojure_lsp.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, root_dir = _4_})
+  lsp.ts_ls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities})
+  lsp.cssls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = {"vscode-css-language-server", "--stdio"}})
+  lsp.html.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = {"vscode-html-language-server", "--stdio"}})
+  lsp.jsonls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = {"vscode-json-language-server", "--stdio"}})
+  local cmd = {"ngserver", "--stdio", "--tsProbeLocations", "/home/grisotto/.nvm/versions/node/v18.19.1/lib/node_modules/", "--ngProbeLocations", "/home/grisotto/.nvm/versions/node/v18.19.1/lib/node_modules/"}
+  local function _5_(pattern)
+    local util = require("lspconfig.util")
+    local fallback = vim.loop.cwd()
+    local patterns = {"angular.json", ".git"}
+    local root = util.root_pattern(patterns)(pattern)
+    return (root or fallback)
+  end
+  local function _6_(new_config, new_root_dir)
+    new_config["cmd"] = cmd
+    return nil
+  end
+  return lsp.angularls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = cmd, root_dir = _5_, on_new_config = _6_})
 end
 return {{"neovim/nvim-lspconfig", config = _1_}}

@@ -68,4 +68,43 @@
                                                         fallback (vim.loop.cwd)
                                                         patterns [:project.clj :deps.edn :build.boot :shadow-cljs.edn :.git :bb.edn]
                                                         root ((util.root_pattern patterns) pattern)]
-                                                    (or root fallback)))})))}]
+                                                    (or root fallback)))})
+              ;; JavaScript and TypeScript
+              (lsp.ts_ls.setup {:on_attach on_attach
+                                :handlers handlers
+                                :before_init before_init
+                                :capabilities capabilities})
+              ;; html / css / json
+                (lsp.cssls.setup {:on_attach on_attach
+                                  :handlers handlers
+                                  :before_init before_init
+                                  :capabilities capabilities
+                                  :cmd ["vscode-css-language-server" "--stdio"]})
+
+                (lsp.html.setup {:on_attach on_attach
+                                 :handlers handlers
+                                 :before_init before_init
+                                 :capabilities capabilities
+                                 :cmd ["vscode-html-language-server" "--stdio"]})
+
+                (lsp.jsonls.setup {:on_attach on_attach
+                                   :handlers handlers
+                                   :before_init before_init
+                                   :capabilities capabilities
+                                   :cmd ["vscode-json-language-server" "--stdio"]})
+                (local cmd ["ngserver" "--stdio" "--tsProbeLocations" "/home/grisotto/.nvm/versions/node/v18.19.1/lib/node_modules/" "--ngProbeLocations" "/home/grisotto/.nvm/versions/node/v18.19.1/lib/node_modules/"])
+                (lsp.angularls.setup {:on_attach on_attach
+                                  :handlers handlers
+                                  :before_init before_init
+                                  :capabilities capabilities
+                                  :cmd cmd
+                                  :root_dir (fn [pattern]
+                                              (let [util (require :lspconfig.util)
+                                                    fallback (vim.loop.cwd)
+                                                      patterns [:angular.json :.git]
+                                                      root ((util.root_pattern patterns) pattern)]
+                                                  (or root fallback)))
+                                 :on_new_config (fn [new-config new-root-dir]
+                                                    (tset new-config :cmd cmd))
+                                  })
+                ))}]
