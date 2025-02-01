@@ -40,6 +40,10 @@
        :splitright true
        ;enable highlighting search
        :hlsearch true
+       ;termguicolors to bufferline works
+       :termguicolors true
+       ;session config to autosession
+       :sessionoptions "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
        }]
   (each [option value (pairs options)]
     (core.assoc vim.o option value)))
