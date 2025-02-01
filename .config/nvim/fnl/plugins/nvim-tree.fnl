@@ -17,6 +17,8 @@
                 {:on_attach on-attach
                  :sort_by "case_sensitive"
                  :view {:adaptive_size true}
+                 :update_focused_file {:enable true
+                    :update_cwd true}
                  :renderer {:group_empty true
                             :indent_markers {:enable false}
                             :icons {:webdev_colors false

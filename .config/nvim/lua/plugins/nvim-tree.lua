@@ -14,7 +14,7 @@ local function _1_()
     return vim.keymap.set("n", "u", api.tree.toggle_custom_filter, opts("Toggle Hidden"))
   end
   on_attach = on_attach0
-  return tree.setup({on_attach = on_attach, sort_by = "case_sensitive", view = {adaptive_size = true}, renderer = {group_empty = true, indent_markers = {enable = false}, icons = {git_placement = "after", glyphs = {bookmark = "\239\145\186", folder = {default = "\239\132\148", open = "\239\132\149"}}, webdev_colors = false}}, filters = {custom = {"^\\.git$"}}})
+  return tree.setup({on_attach = on_attach, sort_by = "case_sensitive", view = {adaptive_size = true}, update_focused_file = {enable = true, update_cwd = true}, renderer = {group_empty = true, indent_markers = {enable = false}, icons = {git_placement = "after", glyphs = {bookmark = "\239\145\186", folder = {default = "\239\132\148", open = "\239\132\149"}}, webdev_colors = false}}, filters = {custom = {"^\\.git$"}}})
 end
 local function _3_()
   vim.cmd("hi NvimTreeSpecialFile ctermfg=7 guifg=#c6c6c6")
