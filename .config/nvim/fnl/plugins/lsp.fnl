@@ -107,4 +107,18 @@
                                  :on_new_config (fn [new-config new-root-dir]
                                                     (tset new-config :cmd cmd))
                                   })
+
+                (lsp.terraformls.setup {
+                                 :on_attach on_attach
+                                 :handlers handlers
+                                 :before_init before_init
+                                 :capabilities capabilities
+                                 :filetypes ["terraform" "hcl" "tf" "tfvars"]
+                                 :init_options [:experimentalFeatures {:validateOnSave true}]
+                                 :root_dir (fn [pattern]
+                                              (let [util (require :lspconfig.util)
+                                                      patterns [:.terraform :.git]
+                                                      root ((util.root_pattern patterns))]
+                                                  root))
+                                       })
                 ))}]

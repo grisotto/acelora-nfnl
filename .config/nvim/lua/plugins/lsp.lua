@@ -65,6 +65,13 @@ local function _1_()
     new_config["cmd"] = cmd
     return nil
   end
-  return lsp.angularls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = cmd, root_dir = _5_, on_new_config = _6_})
+  lsp.angularls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, cmd = cmd, root_dir = _5_, on_new_config = _6_})
+  local function _7_(pattern)
+    local util = require("lspconfig.util")
+    local patterns = {".terraform", ".git"}
+    local root = util.root_pattern(patterns)()
+    return root
+  end
+  return lsp.terraformls.setup({on_attach = on_attach, handlers = handlers, before_init = before_init, capabilities = capabilities, filetypes = {"terraform", "hcl", "tf", "tfvars"}, init_options = {"experimentalFeatures", {validateOnSave = true}}, root_dir = _7_})
 end
 return {{"neovim/nvim-lspconfig", config = _1_}}
