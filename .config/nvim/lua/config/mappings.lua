@@ -51,4 +51,13 @@ local function auto_conjure_select()
 end
 api.nvim_create_user_command("AutoConjureSelect", auto_conjure_select, {})
 api.nvim_create_autocmd("BufReadPost", {pattern = "*.cljs", callback = auto_conjure_select})
+local wk = require("which-key")
+local gs = require("gitsigns")
+local function _3_()
+  return gs.blame_line({full = true})
+end
+local function _4_()
+  return gs.diffthis("~")
+end
+wk.register({h = {name = "+Gitsigns", s = {gs.stage_hunk, "Stage Hunk"}, r = {gs.reset_hunk, "Reset Hunk"}, R = {gs.reset_buffer, "Reset Buffer"}, u = {gs.undo_stage_hunk, "Undo Stage Hunk"}, p = {gs.preview_hunk, "Preview Hunk"}, b = {_3_, "Blame Line"}, d = {gs.diffthis, "Diff This"}, D = {_4_, "Diff This ~"}}}, {prefix = "<leader>"})
 return {}

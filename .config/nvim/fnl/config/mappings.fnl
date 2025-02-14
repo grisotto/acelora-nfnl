@@ -100,4 +100,23 @@
   {:pattern "*.cljs"
    :callback auto-conjure-select})
 
+(local wk (require :which-key))
+(local gs (require :gitsigns))
+
+(wk.register 
+ {
+  :h {
+      :name "+Gitsigns"
+      :s [gs.stage_hunk "Stage Hunk"]
+      :r [gs.reset_hunk "Reset Hunk"]
+      :R [gs.reset_buffer "Reset Buffer"]
+      :u [gs.undo_stage_hunk "Undo Stage Hunk"]
+      :p [gs.preview_hunk "Preview Hunk"]
+      :b [(fn [] (gs.blame_line {:full true})) "Blame Line"]
+      :d [gs.diffthis "Diff This"]
+      :D [(fn [] (gs.diffthis "~")) "Diff This ~"]
+  }
+ }
+ {:prefix "<leader>"})
+
 {}
